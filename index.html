@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Check Form Khuyến Mại</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      animation: gradientShift 15s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+      50% { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+    }
+
+    .container {
+      max-width: 950px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.98);
+      padding: 40px;
+      border-radius: 25px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      animation: slideIn 0.6s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      text-align: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 30px;
+      font-size: 32px;
+      font-weight: 700;
+      text-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+    }
+
+    h3 {
+      margin-top: 30px;
+      margin-bottom: 12px;
+      color: #2d3748;
+      font-size: 18px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin: 15px 0 25px;
+    }
+
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      padding: 14px 18px;
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+      border-radius: 12px;
+      border: 2px solid #e2e8f0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-size: 15px;
+      color: #4a5568;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      flex: 1 1 200px;
+    }
+
+    .checkbox-group label:hover {
+      background: linear-gradient(135deg, #e6f2ff 0%, #d6e8ff 100%);
+      border-color: #667eea;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .checkbox-group label:has(input:checked) {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-color: #667eea;
+      color: white;
+      box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .checkbox-group label input[type="checkbox"],
+    .checkbox-group label input[type="radio"] {
+      margin-right: 10px;
+      cursor: pointer;
+      width: 20px;
+      height: 20px;
+      accent-color: #667eea;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 150px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 15px;
+      resize: vertical;
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      font-family: inherit;
+      font-size: 15px;
+      margin-top: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      display: block;
+      visibility: visible;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    }
+
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 16px 50px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 17px;
+      font-weight: 600;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: block;
+      margin: 30px auto 0;
+      box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4);
+      letter-spacing: 0.5px;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 35px rgba(102, 126, 234, 0.5);
+      background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    }
+
+    button:active {
+      transform: translateY(-1px);
+    }
+
+    #resultArea {
+      margin-top: 35px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .section-title {
+      font-weight: 700;
+      margin-top: 25px;
+      margin-bottom: 12px;
+      font-size: 20px;
+      color: #2d3748;
+      display: block;
+      visibility: visible;
+    }
+
+    .section-title:first-child {
+      margin-top: 0;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Mobile Responsive Design */
+    @media screen and (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+
+      .container {
+        padding: 24px 16px;
+        border-radius: 20px;
+      }
+
+      h1 {
+        font-size: 20px;
+        margin-bottom: 18px;
+      }
+
+      h3 {
+        font-size: 15px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+
+      .checkbox-group {
+        flex-direction: row;
+        gap: 10px;
+      }
+
+      .checkbox-group label {
+        flex: 1 1 calc(50% - 5px);
+        min-width: 0;
+        padding: 10px 8px;
+        font-size: 13px;
+        border-radius: 10px;
+        border-width: 1.5px;
+      }
+
+      .checkbox-group label input[type="checkbox"],
+      .checkbox-group label input[type="radio"] {
+        width: 16px;
+        height: 16px;
+        margin-right: 6px;
+      }
+
+      textarea {
+        min-height: 120px;
+        font-size: 14px;
+        padding: 12px;
+      }
+
+      button {
+        width: 100%;
+        padding: 16px;
+        font-size: 16px;
+        border-radius: 10px;
+      }
+
+      #resultArea {
+        margin-top: 20px;
+        display: block;
+        padding: 15px 10px;
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .section-title {
+        font-size: 15px;
+        margin-top: 18px;
+        margin-bottom: 10px;
+      }
+
+      #resultArea .section-title {
+        font-size: 15px;
+        margin-top: 15px;
+        margin-bottom: 8px;
+        display: block;
+        visibility: visible;
+      }
+
+      #resultArea textarea {
+        margin-top: 8px;
+        min-height: 120px;
+        font-size: 13px;
+        padding: 10px;
+        display: block;
+        width: 100%;
+        visibility: visible;
+        overflow-y: visible;
+      }
+
+    }
+
+    /* Tablet Responsive Design */
+    @media screen and (min-width: 769px) and (max-width: 1024px) {
+      .container {
+        max-width: 95%;
+        padding: 35px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🏷️ Chọn Chương trình Khuyến Mại</h1>
+
+    <h3>🍷 Rượu/Bia ≥ 15 độ?</h3>
+    <div class="checkbox-group">
+      <label><input type="radio" name="alcohol" value="yes"> Có</label>
+      <label><input type="radio" name="alcohol" value="no"> Không</label>
+    </div>
+
+    <h3>🎯 Chọn loại hình khuyến mại</h3>
+    <div class="checkbox-group">
+      <label><input type="checkbox" name="promotionType" value="Hang mau"> Hàng mẫu</label>
+      <label><input type="checkbox" name="promotionType" value="Tang hang hoa/dich vu"> Tặng hàng hóa/dịch vụ</label>
+      <label><input type="checkbox" name="promotionType" value="Giam gia"> Giảm giá</label>
+      <label><input type="checkbox" name="promotionType" value="Tang phieu mua hang"> Tặng phiếu mua hàng</label>
+      <label><input type="checkbox" name="promotionType" value="Trao thuong thi"> Trao thưởng thi</label>
+      <label><input type="checkbox" name="promotionType" value="Chuong trinh may rui"> Chương trình may rủi</label>
+      <label><input type="checkbox" name="promotionType" value="Khach hang thuong xuyen"> Khách hàng thường xuyên</label>
+      <label><input type="checkbox" name="promotionType" value="Khuyen mai dien tu"> Khuyến mại điện tử</label>
+      <label><input type="checkbox" name="promotionType" value="Nghe si bieu dien"> Nghệ sĩ biểu diễn</label>
+      <label><input type="checkbox" name="promotionType" value="Ban coupon"> Bán coupon</label>
+    </div>
+
+    <button onclick="checkResult()">✨ Check Kết Quả</button>
+
+    <div id="resultArea">
+      <div class="section-title">📘 Yêu cầu pháp lý</div>
+      <textarea id="govReq" readonly>Chọn và bấm 'Check Kết Quả' để xem yêu cầu pháp lý...</textarea>
+
+      <div class="section-title">📂 Hồ sơ cần chuẩn bị</div>
+      <textarea id="documents" readonly>Chọn và bấm 'Check Kết Quả' để xem hồ sơ cần chuẩn bị...</textarea>
+    </div>
+  </div>
+
+<script>
+const requirements = {
+  "Hang mau": "Không yêu cầu thủ tục.",
+  "Tang hang hoa/dich vu": "Không yêu cầu thủ tục.",
+  "Giam gia": "Tổng thời gian khuyến mại không vượt quá 120 ngày/năm; không bao gồm 30 ngày trước Tết Âm lịch.",
+  "Tang phieu mua hang": "Không yêu cầu thủ tục.",
+  "Trao thuong thi": "Thông báo với Sở Công Thương tối thiểu 3 ngày trước khi triển khai nếu tổng giá trị giải thưởng ≥ 100 triệu VNĐ.",
+  "Chuong trinh may rui": "Đăng ký với Sở Công Thương. Nếu không có người trúng thưởng, phải nộp 50% giá trị giải thưởng cho NSNN.",
+  "Khach hang thuong xuyen": "Không yêu cầu thủ tục.",
+  "Khuyen mai dien tu": "Không yêu cầu thủ tục.",
+  "Nghe si bieu dien": "Xin cấp phép biểu diễn.",
+  "Ban coupon": "Không yêu cầu thủ tục."
+};
+
+const documents = [
+  {
+    doc: "Thông báo thực hiện chương trình khuyến mại được Giám đốc ký duyệt",
+    apply: ["Giam gia", "Tang phieu mua hang", "Trao thuong thi", "Chuong trinh may rui"]
+  },
+  {
+    doc: "Proposal chi tiết chương trình đã được phê duyệt",
+    apply: ["Hang mau", "Tang hang hoa/dich vu", "Giam gia", "Tang phieu mua hang", "Trao thuong thi", "Chuong trinh may rui", "Khach hang thuong xuyen", "Khuyen mai dien tu", "Nghe si bieu dien", "Ban coupon"]
+  },
+  {
+    doc: "Bảng dự trù ngân sách và phê duyệt ngân sách thực hiện chương trình",
+    apply: ["Hang mau", "Tang hang hoa/dich vu", "Giam gia", "Tang phieu mua hang", "Trao thuong thi", "Chuong trinh may rui", "Khach hang thuong xuyen", "Khuyen mai dien tu", "Nghe si bieu dien", "Ban coupon"]
+  },
+  {
+    doc: "Bảng quyết toán chương trình (kèm hình ảnh nghiệm thu chương trình)",
+    apply: ["Hang mau", "Tang hang hoa/dich vu", "Giam gia", "Tang phieu mua hang", "Trao thuong thi", "Chuong trinh may rui", "Khach hang thuong xuyen", "Khuyen mai dien tu", "Nghe si bieu dien", "Ban coupon"]
+  },
+  {
+    doc: "Bộ chứng từ chuẩn theo quy trình thanh toán",
+    apply: ["Hang mau", "Tang hang hoa/dich vu", "Giam gia", "Tang phieu mua hang", "Trao thuong thi", "Chuong trinh may rui", "Khach hang thuong xuyen", "Khuyen mai dien tu", "Nghe si bieu dien", "Ban coupon"]
+  },
+  {
+    doc: "Hồ sơ đăng ký chương trình gửi tới Sở Công Thương (kèm xác nhận thông báo online hoặc bưu điện)",
+    apply: ["Chuong trinh may rui"]
+  },
+  {
+    doc: "Chấp thuận đăng ký thành công của Sở Công Thương (Mẫu số 04 Nghị định 81/2018/NĐ-CP)",
+    apply: ["Chuong trinh may rui"]
+  },
+  {
+    doc: "Hồ sơ kê khai thuế TNCN cho cá nhân trúng thưởng (nếu giá trị giải thưởng ≥ 10 triệu VND)",
+    apply: ["Chuong trinh may rui", "Trao thuong thi"]
+  }
+];
+
+function checkResult() {
+  try {
+    const alcohol = document.querySelector('input[name="alcohol"]:checked');
+    const selectedPromotions = document.querySelectorAll('input[name="promotionType"]:checked');
+    const resultDiv = document.getElementById('resultArea');
+    const govReq = document.getElementById('govReq');
+    const docs = document.getElementById('documents');
+
+    if (!alcohol || selectedPromotions.length === 0) {
+      alert("⚠️ Vui lòng chọn Rượu/Bia và ít nhất một loại hình khuyến mại!");
+      return;
+    }
+
+    if (!govReq || !docs || !resultDiv) {
+      alert("❌ Lỗi: Không tìm thấy các phần tử cần thiết trong trang.");
+      return;
+    }
+
+    // --- Yêu cầu pháp lý ---
+    let reqText = "";
+    for (let i = 0; i < selectedPromotions.length; i++) {
+      const promotionType = selectedPromotions[i].value;
+      reqText += "▶ " + promotionType + ":\n" + requirements[promotionType];
+      if (i < selectedPromotions.length - 1) {
+        reqText += "\n\n";
+      }
+    }
+    reqText += "\n\n";
+    
+    if (alcohol.value === "yes") {
+      reqText += "⚠️ Lưu ý: Nếu chương trình liên quan đến rượu/bia ≥15°, phải tuân thủ quy định quản lý đặc biệt theo Luật Phòng chống tác hại của rượu, bia.\n";
+    }
+
+    // --- Hồ sơ cần chuẩn bị ---
+    let docList = [];
+    for (let i = 0; i < selectedPromotions.length; i++) {
+      const promotionType = selectedPromotions[i].value;
+      for (let j = 0; j < documents.length; j++) {
+        let d = documents[j];
+        let found = false;
+        for (let k = 0; k < d.apply.length; k++) {
+          if (d.apply[k] === promotionType) {
+            found = true;
+            break;
+          }
+        }
+        if (found) {
+          docList.push(d.doc);
+        }
+      }
+    }
+    
+    // loại bỏ trùng
+    let uniqueDocs = [];
+    for (let i = 0; i < docList.length; i++) {
+      if (uniqueDocs.indexOf(docList[i]) === -1) {
+        uniqueDocs.push(docList[i]);
+      }
+    }
+    
+    let docText = "";
+    for (let i = 0; i < uniqueDocs.length; i++) {
+      docText += "• " + uniqueDocs[i];
+      if (i < uniqueDocs.length - 1) {
+        docText += "\n";
+      }
+    }
+
+    // Validate and set values
+    if (reqText.trim() === "" || docText.trim() === "") {
+      alert("⚠️ Không có dữ liệu để hiển thị!");
+      return;
+    }
+    
+    // Set values to textarea
+    govReq.value = reqText.trim();
+    docs.value = docText.trim();
+    
+    // Verify the values were set
+    alert("Đã tìm thấy " + reqText.trim().length + " ký tự yêu cầu pháp lý và " + docText.trim().length + " ký tự hồ sơ!");
+    
+    // Force visibility
+    govReq.style.visibility = 'visible';
+    docs.style.visibility = 'visible';
+    
+    // Scroll to result
+    setTimeout(() => {
+      resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 300);
+  } catch (error) {
+    alert("Có lỗi xảy ra: " + error.message + "\n\nVui lòng thử lại hoặc kiểm tra console để biết thêm chi tiết.");
+  }
+}
+</script>
+  </body>
+</html>
