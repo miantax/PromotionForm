@@ -11,6 +11,11 @@
       box-sizing: border-box;
     }
 
+    html {
+      overscroll-behavior: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -18,6 +23,7 @@
       margin: 0;
       padding: 20px;
       animation: gradientShift 15s ease infinite;
+      overscroll-behavior: none;
     }
 
     @keyframes gradientShift {
@@ -385,7 +391,10 @@ function checkResult() {
         errorMsg.textContent = "⚠️ Vui lòng chọn Rượu/Bia và ít nhất một loại hình khuyến mại!";
         errorMsg.style.display = 'block';
         setTimeout(() => {
-          errorMsg.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+          const yOffset = -20;
+          const element = errorMsg;
+          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
         }, 100);
       }
       return;
@@ -468,11 +477,10 @@ function checkResult() {
     
     // Scroll to result after content is rendered
     setTimeout(() => {
-      resultDiv.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'start',
-        inline: 'nearest'
-      });
+      const yOffset = -20; // Small offset from top
+      const element = resultDiv;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
     }, 300);
   } catch (error) {
     if (errorMsg) {
