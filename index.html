@@ -396,6 +396,9 @@ function checkResult() {
       if (errorMsg) {
         errorMsg.textContent = "⚠️ Vui lòng chọn Rượu/Bia và ít nhất một loại hình khuyến mại!";
         errorMsg.style.display = 'block';
+        setTimeout(() => {
+          errorMsg.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+        }, 100);
       }
       return;
     }
@@ -475,10 +478,14 @@ function checkResult() {
     govReq.style.visibility = 'visible';
     docs.style.visibility = 'visible';
     
-    // Scroll to result
+    // Scroll to result after content is rendered
     setTimeout(() => {
-      resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 300);
+      resultDiv.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'center',
+        inline: 'nearest'
+      });
+    }, 500);
   } catch (error) {
     if (errorMsg) {
       errorMsg.textContent = "Có lỗi xảy ra: " + error.message;
