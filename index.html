@@ -412,7 +412,18 @@ function checkResult() {
     let reqText = "";
     for (let i = 0; i < selectedPromotions.length; i++) {
       const promotionType = selectedPromotions[i].value;
-      reqText += "▶ " + promotionType + ":\n" + requirements[promotionType];
+      let req = requirements[promotionType];
+      
+      // Đặc biệt cho Chương trình may rủi
+      if (promotionType === "Chuong trinh may rui") {
+        if (alcohol.value === "yes") {
+          req = "Không yêu cầu thủ tục. (Rựou/Bia ≥ 15° không được phép khuyến mại)";
+        } else {
+          req = requirements[promotionType];
+        }
+      }
+      
+      reqText += "▶ " + promotionType + ":\n" + req;
       if (i < selectedPromotions.length - 1) {
         reqText += "\n\n";
       }
@@ -436,6 +447,15 @@ function checkResult() {
             break;
           }
         }
+        
+        // Đặc biệt cho Chương trình may rủi: nếu alcohol = "yes" thì bỏ documents đăng ký Sở
+        if (found && promotionType === "Chuong trinh may rui" && alcohol.value === "yes") {
+          if (d.doc.includes("Hồ sơ đăng ký chương trình") || 
+              d.doc.includes("Chấp thuận đăng ký thành công")) {
+            found = false; // Bỏ qua document này
+          }
+        }
+        
         if (found) {
           docList.push(d.doc);
         }
