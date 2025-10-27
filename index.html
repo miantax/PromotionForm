@@ -319,6 +319,8 @@
     </div>
 
     <button onclick="checkResult()">✨ Check Kết Quả</button>
+    
+    <div id="errorMessage" style="display: none; margin-top: 20px; padding: 15px; background: #fee; border: 2px solid #fcc; border-radius: 10px; color: #c33; text-align: center; font-weight: 600;"></div>
 
     <div id="resultArea">
       <div class="section-title">📘 Yêu cầu pháp lý</div>
@@ -385,14 +387,24 @@ function checkResult() {
     const resultDiv = document.getElementById('resultArea');
     const govReq = document.getElementById('govReq');
     const docs = document.getElementById('documents');
+    const errorMsg = document.getElementById('errorMessage');
+
+    // Hide error message
+    if (errorMsg) errorMsg.style.display = 'none';
 
     if (!alcohol || selectedPromotions.length === 0) {
-      alert("⚠️ Vui lòng chọn Rượu/Bia và ít nhất một loại hình khuyến mại!");
+      if (errorMsg) {
+        errorMsg.textContent = "⚠️ Vui lòng chọn Rượu/Bia và ít nhất một loại hình khuyến mại!";
+        errorMsg.style.display = 'block';
+      }
       return;
     }
 
     if (!govReq || !docs || !resultDiv) {
-      alert("❌ Lỗi: Không tìm thấy các phần tử cần thiết trong trang.");
+      if (errorMsg) {
+        errorMsg.textContent = "❌ Lỗi: Không tìm thấy các phần tử cần thiết trong trang.";
+        errorMsg.style.display = 'block';
+      }
       return;
     }
 
@@ -448,7 +460,10 @@ function checkResult() {
 
     // Validate and set values
     if (reqText.trim() === "" || docText.trim() === "") {
-      alert("⚠️ Không có dữ liệu để hiển thị!");
+      if (errorMsg) {
+        errorMsg.textContent = "⚠️ Không có dữ liệu để hiển thị!";
+        errorMsg.style.display = 'block';
+      }
       return;
     }
     
@@ -465,7 +480,11 @@ function checkResult() {
       resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 300);
   } catch (error) {
-    alert("Có lỗi xảy ra: " + error.message + "\n\nVui lòng thử lại hoặc kiểm tra console để biết thêm chi tiết.");
+    if (errorMsg) {
+      errorMsg.textContent = "Có lỗi xảy ra: " + error.message;
+      errorMsg.style.display = 'block';
+    }
+    console.error("Error:", error);
   }
 }
 </script>
