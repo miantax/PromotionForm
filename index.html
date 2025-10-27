@@ -166,7 +166,6 @@
 
     #resultArea {
       margin-top: 35px;
-      animation: fadeIn 0.5s ease;
     }
 
     .section-title {
@@ -181,17 +180,6 @@
 
     .section-title:first-child {
       margin-top: 0;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     /* Mobile Responsive Design */
@@ -397,7 +385,7 @@ function checkResult() {
         errorMsg.textContent = "⚠️ Vui lòng chọn Rượu/Bia và ít nhất một loại hình khuyến mại!";
         errorMsg.style.display = 'block';
         setTimeout(() => {
-          errorMsg.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+          errorMsg.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
         }, 100);
       }
       return;
@@ -482,10 +470,10 @@ function checkResult() {
     setTimeout(() => {
       resultDiv.scrollIntoView({ 
         behavior: 'smooth', 
-        block: 'center',
+        block: 'start',
         inline: 'nearest'
       });
-    }, 500);
+    }, 300);
   } catch (error) {
     if (errorMsg) {
       errorMsg.textContent = "Có lỗi xảy ra: " + error.message;
