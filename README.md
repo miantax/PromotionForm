@@ -11,8 +11,17 @@
 ## Cách sử dụng
 Mở file `index.html` trong trình duyệt web.
 
+## Cách push code lên GitHub
+
+**Yêu cầu:** Bạn cần thêm SSH key vào GitHub trước (https://github.com/settings/keys)
+
+```bash
+git remote set-url origin git@github.com:miantax/PromotionForm.git
+git push origin main
+```
+
 ## Triển khai trên GitHub Pages
 1. Push code lên GitHub
 2. Vào Settings > Pages
 3. Chọn branch `main` và folder `root`
-4. Trang sẽ được publish tại: `https://[username].github.io/PromotionForm`
+4. Trang sẽ được publish tại: `https://miantax.github.io/PromotionForm`
