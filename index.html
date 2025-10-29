@@ -326,53 +326,107 @@
   </div>
 
 <script>
-const requirements = {
-  "Hang mau": "Không yêu cầu thủ tục.",
-  "Tang hang hoa/dich vu": "Không yêu cầu thủ tục.",
-  "Giam gia": "Tổng thời gian khuyến mại không vượt quá 120 ngày/năm; không bao gồm 30 ngày trước Tết Âm lịch.",
-  "Tang phieu mua hang": "Không yêu cầu thủ tục.",
-  "Trao thuong thi": "Thông báo với Sở Công Thương tối thiểu 3 ngày trước khi triển khai nếu tổng giá trị giải thưởng ≥ 100 triệu VNĐ.",
-  "Chuong trinh may rui": "Đăng ký với Sở Công Thương. Nếu không có người trúng thưởng, phải nộp 50% giá trị giải thưởng cho NSNN.",
-  "Khach hang thuong xuyen": "Không yêu cầu thủ tục.",
-  "Khuyen mai dien tu": "Không yêu cầu thủ tục.",
-  "Nghe si bieu dien": "Xin cấp phép biểu diễn; Không yêu cầu thủ tục.",
-  "Ban coupon": "Không yêu cầu thủ tục."
+// Constants
+const DOC_KEYS = {
+  THONG_BAO: "Thông báo thực hiện chương trình khuyến mại được Giám đốc ký duyệt",
+  PROPOSAL: "Proposal chi tiết chương trình đã được phê duyệt",
+  DUTRU_NGANSACH: "Bảng dự trù ngân sách và phê duyệt ngân sách thực hiện chương trình",
+  QUYET_TOAN: "Bảng quyết toán chương trình (kèm hình ảnh nghiệm thu chương trình)",
+  CHUNG_TU: "Bộ chứng từ chuẩn theo quy trình thanh toán",
+  DANG_KY_SO: "Hồ sơ đăng ký chương trình gửi tới Sở Công Thương (kèm xác nhận thông báo online hoặc bưu điện)",
+  CHAP_THUAN: "Chấp thuận đăng ký thành công của Sở Công Thương (Mẫu số 04 Nghị định 81/2018/NĐ-CP)",
+  TNCN: "Hồ sơ kê khai thuế TNCN cho cá nhân trúng thưởng (nếu giá trị giải thưởng ≥ 10 triệu VND)",
+  QUYET_DINH_CHO_BIEU: "Quyết định cho, biếu, tặng khách hàng được kí và phê duyệt bởi giám đốc",
+  DANH_SACH_KH: "Danh sách các khách hàng được nhận quà tặng",
+  HO_SO_BIEU_DIEN: "Hồ sơ đăng ký cấp phép biểu diễn",
+  GIAY_PHEP_BIEU_DIEN: "Giấy phép biểu diễn cho nghệ sĩ"
 };
 
-const documents = [
-  {
-    doc: "Thông báo thực hiện chương trình khuyến mại được Giám đốc ký duyệt",
-    apply: ["Giam gia", "Tang phieu mua hang", "Trao thuong thi", "Chuong trinh may rui"]
+// Base configuration for all promotion types
+const PROMOTION_CONFIG = {
+  "Hang mau": {
+    requirement: "Không yêu cầu thủ tục.",
+    documents: [DOC_KEYS.PROPOSAL, DOC_KEYS.DUTRU_NGANSACH, DOC_KEYS.QUYET_TOAN, DOC_KEYS.CHUNG_TU]
   },
-  {
-    doc: "Proposal chi tiết chương trình đã được phê duyệt",
-    apply: ["Hang mau", "Tang hang hoa/dich vu", "Giam gia", "Tang phieu mua hang", "Trao thuong thi", "Chuong trinh may rui", "Khach hang thuong xuyen", "Khuyen mai dien tu", "Nghe si bieu dien", "Ban coupon"]
+  "Tang hang hoa/dich vu": {
+    requirement: "Không yêu cầu thủ tục.",
+    documents: [DOC_KEYS.PROPOSAL, DOC_KEYS.DUTRU_NGANSACH, DOC_KEYS.QUYET_TOAN, DOC_KEYS.CHUNG_TU]
   },
-  {
-    doc: "Bảng dự trù ngân sách và phê duyệt ngân sách thực hiện chương trình",
-    apply: ["Hang mau", "Tang hang hoa/dich vu", "Giam gia", "Tang phieu mua hang", "Trao thuong thi", "Chuong trinh may rui", "Khach hang thuong xuyen", "Khuyen mai dien tu", "Nghe si bieu dien", "Ban coupon"]
+  "Giam gia": {
+    requirement: "Tổng thời gian khuyến mại không vượt quá 120 ngày/năm; không bao gồm 30 ngày trước Tết Âm lịch.",
+    documents: [DOC_KEYS.THONG_BAO, DOC_KEYS.PROPOSAL, DOC_KEYS.DUTRU_NGANSACH, DOC_KEYS.QUYET_TOAN, DOC_KEYS.CHUNG_TU]
   },
-  {
-    doc: "Bảng quyết toán chương trình (kèm hình ảnh nghiệm thu chương trình)",
-    apply: ["Hang mau", "Tang hang hoa/dich vu", "Giam gia", "Tang phieu mua hang", "Trao thuong thi", "Chuong trinh may rui", "Khach hang thuong xuyen", "Khuyen mai dien tu", "Nghe si bieu dien", "Ban coupon"]
+  "Tang phieu mua hang": {
+    requirement: "Không yêu cầu thủ tục.",
+    documents: [DOC_KEYS.THONG_BAO, DOC_KEYS.PROPOSAL, DOC_KEYS.DUTRU_NGANSACH, DOC_KEYS.QUYET_TOAN, DOC_KEYS.CHUNG_TU]
   },
-  {
-    doc: "Bộ chứng từ chuẩn theo quy trình thanh toán",
-    apply: ["Hang mau", "Tang hang hoa/dich vu", "Giam gia", "Tang phieu mua hang", "Trao thuong thi", "Chuong trinh may rui", "Khach hang thuong xuyen", "Khuyen mai dien tu", "Nghe si bieu dien", "Ban coupon"]
+  "Trao thuong thi": {
+    requirement: "Thông báo với Sở Công Thương tối thiểu 3 ngày trước khi triển khai nếu tổng giá trị giải thưởng ≥ 100 triệu VNĐ.",
+    documents: [DOC_KEYS.THONG_BAO, DOC_KEYS.PROPOSAL, DOC_KEYS.DUTRU_NGANSACH, DOC_KEYS.QUYET_TOAN, DOC_KEYS.CHUNG_TU, DOC_KEYS.TNCN]
   },
-  {
-    doc: "Hồ sơ đăng ký chương trình gửi tới Sở Công Thương (kèm xác nhận thông báo online hoặc bưu điện)",
-    apply: ["Chuong trinh may rui"]
+  "Chuong trinh may rui": {
+    requirement: "Đăng ký với Sở Công Thương. Nếu không có người trúng thưởng, phải nộp 50% giá trị giải thưởng cho NSNN.",
+    documents: [DOC_KEYS.THONG_BAO, DOC_KEYS.PROPOSAL, DOC_KEYS.DUTRU_NGANSACH, DOC_KEYS.QUYET_TOAN, DOC_KEYS.CHUNG_TU, DOC_KEYS.DANG_KY_SO, DOC_KEYS.CHAP_THUAN, DOC_KEYS.TNCN]
   },
-  {
-    doc: "Chấp thuận đăng ký thành công của Sở Công Thương (Mẫu số 04 Nghị định 81/2018/NĐ-CP)",
-    apply: ["Chuong trinh may rui"]
+  "Khach hang thuong xuyen": {
+    requirement: "Không yêu cầu thủ tục.",
+    documents: [DOC_KEYS.PROPOSAL, DOC_KEYS.DUTRU_NGANSACH, DOC_KEYS.QUYET_TOAN, DOC_KEYS.CHUNG_TU]
   },
-  {
-    doc: "Hồ sơ kê khai thuế TNCN cho cá nhân trúng thưởng (nếu giá trị giải thưởng ≥ 10 triệu VND)",
-    apply: ["Chuong trinh may rui", "Trao thuong thi"]
+  "Khuyen mai dien tu": {
+    requirement: "Không yêu cầu thủ tục.",
+    documents: [DOC_KEYS.PROPOSAL, DOC_KEYS.DUTRU_NGANSACH, DOC_KEYS.QUYET_TOAN, DOC_KEYS.CHUNG_TU]
+  },
+  "Nghe si bieu dien": {
+    requirement: "Xin cấp phép biểu diễn; Không yêu cầu thủ tục.",
+    documents: [DOC_KEYS.PROPOSAL, DOC_KEYS.DUTRU_NGANSACH, DOC_KEYS.QUYET_TOAN, DOC_KEYS.CHUNG_TU]
+  },
+  "Ban coupon": {
+    requirement: "Không yêu cầu thủ tục.",
+    documents: [DOC_KEYS.PROPOSAL, DOC_KEYS.DUTRU_NGANSACH, DOC_KEYS.QUYET_TOAN, DOC_KEYS.CHUNG_TU]
   }
-];
+};
+
+// Alcohol-specific overrides (yes = rượu/bia ≥ 15 độ)
+const ALCOHOL_OVERRIDES = {
+  yes: {
+    requirements: {
+      "Hang mau": "Không yêu cầu thủ tục. Hàng cho, biếu, không thu tiền",
+      "Tang hang hoa/dich vu": "Không yêu cầu thủ tục. Hàng cho, biếu, không thu tiền",
+      "Trao thuong thi": "Không yêu cầu thủ tục. Hàng cho, biếu, không thu tiền",
+      "Chuong trinh may rui": "Không yêu cầu thủ tục. Hàng cho, biếu, không thu tiền"
+      // Giam gia: giữ nguyên requirement gốc (chỉ bỏ thông báo ở documents)
+    },
+    documents: {
+      add: {
+        "Hang mau": [DOC_KEYS.QUYET_DINH_CHO_BIEU, DOC_KEYS.DANH_SACH_KH],
+        "Tang hang hoa/dich vu": [DOC_KEYS.QUYET_DINH_CHO_BIEU, DOC_KEYS.DANH_SACH_KH],
+        "Trao thuong thi": [DOC_KEYS.QUYET_DINH_CHO_BIEU, DOC_KEYS.DANH_SACH_KH],
+        "Chuong trinh may rui": [DOC_KEYS.QUYET_DINH_CHO_BIEU, DOC_KEYS.DANH_SACH_KH],
+        "Nghe si bieu dien": [DOC_KEYS.HO_SO_BIEU_DIEN, DOC_KEYS.GIAY_PHEP_BIEU_DIEN]
+      },
+      remove: {
+        "Giam gia": [DOC_KEYS.THONG_BAO],
+        "Tang phieu mua hang": [DOC_KEYS.THONG_BAO],
+        "Trao thuong thi": [DOC_KEYS.THONG_BAO],
+        "Chuong trinh may rui": [DOC_KEYS.THONG_BAO, DOC_KEYS.DANG_KY_SO, DOC_KEYS.CHAP_THUAN]
+      }
+    }
+  },
+  no: {
+    documents: {
+      add: {
+        "Hang mau": [DOC_KEYS.THONG_BAO],
+        "Tang hang hoa/dich vu": [DOC_KEYS.THONG_BAO],
+        "Khach hang thuong xuyen": [DOC_KEYS.THONG_BAO],
+        "Khuyen mai dien tu": [DOC_KEYS.THONG_BAO],
+        "Nghe si bieu dien": [DOC_KEYS.HO_SO_BIEU_DIEN, DOC_KEYS.GIAY_PHEP_BIEU_DIEN]
+      },
+      remove: {
+        "Chuong trinh may rui": [DOC_KEYS.THONG_BAO]
+      }
+    }
+  }
+};
 
 function checkResult() {
   try {
@@ -408,75 +462,68 @@ function checkResult() {
       return;
     }
 
-    // --- Yêu cầu pháp lý ---
-    let reqText = "";
-    for (let i = 0; i < selectedPromotions.length; i++) {
-      const promotionType = selectedPromotions[i].value;
-      let req = requirements[promotionType];
+    // Helper functions
+    function getRequirement(promotionType, isAlcohol) {
+      const config = PROMOTION_CONFIG[promotionType];
+      if (!config) return "";
       
-      // Đặc biệt cho Chương trình may rủi
-      if (promotionType === "Chuong trinh may rui") {
-        if (alcohol.value === "yes") {
-          req = "Không yêu cầu thủ tục. (Rượu/Bia ≥ 15° không được phép dùng để khuyến mại)";
-        } else {
-          req = requirements[promotionType];
+      if (isAlcohol && ALCOHOL_OVERRIDES.yes?.requirements?.[promotionType]) {
+        return ALCOHOL_OVERRIDES.yes.requirements[promotionType];
+      }
+      return config.requirement;
+    }
+    
+    function getDocuments(promotionType, isAlcohol) {
+      const config = PROMOTION_CONFIG[promotionType];
+      if (!config) return [];
+      
+      let docs = [...config.documents];
+      const overrideKey = isAlcohol ? 'yes' : 'no';
+      const overrides = ALCOHOL_OVERRIDES[overrideKey]?.documents;
+      
+      if (overrides) {
+        // Remove documents
+        if (overrides.remove?.[promotionType]) {
+          docs = docs.filter(doc => !overrides.remove[promotionType].includes(doc));
+        }
+        // Add documents
+        if (overrides.add?.[promotionType]) {
+          docs.push(...overrides.add[promotionType]);
         }
       }
       
+      return docs;
+    }
+
+    // --- Yêu cầu pháp lý ---
+    const isAlcohol = alcohol.value === "yes";
+    let reqText = "";
+    const selectedPromotionsArray = Array.from(selectedPromotions);
+    
+    selectedPromotionsArray.forEach((promotion, index) => {
+      const promotionType = promotion.value;
+      const req = getRequirement(promotionType, isAlcohol);
       reqText += "▶ " + promotionType + ":\n" + req;
-      if (i < selectedPromotions.length - 1) {
+      if (index < selectedPromotionsArray.length - 1) {
         reqText += "\n\n";
       }
-    }
+    });
     reqText += "\n\n";
     
-    if (alcohol.value === "yes") {
+    if (isAlcohol) {
       reqText += "⚠️ Lưu ý: Nếu chương trình liên quan đến rượu/bia ≥15°, phải tuân thủ quy định quản lý đặc biệt theo Luật Phòng chống tác hại của rượu, bia.\n";
     }
 
     // --- Hồ sơ cần chuẩn bị ---
-    let docList = [];
-    for (let i = 0; i < selectedPromotions.length; i++) {
-      const promotionType = selectedPromotions[i].value;
-      for (let j = 0; j < documents.length; j++) {
-        let d = documents[j];
-        let found = false;
-        for (let k = 0; k < d.apply.length; k++) {
-          if (d.apply[k] === promotionType) {
-            found = true;
-            break;
-          }
-        }
-        
-        // Đặc biệt cho Chương trình may rủi: nếu alcohol = "yes" thì bỏ documents đăng ký Sở
-        if (found && promotionType === "Chuong trinh may rui" && alcohol.value === "yes") {
-          if (d.doc.includes("Hồ sơ đăng ký chương trình") || 
-              d.doc.includes("Chấp thuận đăng ký thành công")) {
-            found = false; // Bỏ qua document này
-          }
-        }
-        
-        if (found) {
-          docList.push(d.doc);
-        }
-      }
-    }
+    let allDocs = new Set();
+    selectedPromotionsArray.forEach(promotion => {
+      const promotionType = promotion.value;
+      const docs = getDocuments(promotionType, isAlcohol);
+      docs.forEach(doc => allDocs.add(doc));
+    });
     
-    // loại bỏ trùng
-    let uniqueDocs = [];
-    for (let i = 0; i < docList.length; i++) {
-      if (uniqueDocs.indexOf(docList[i]) === -1) {
-        uniqueDocs.push(docList[i]);
-      }
-    }
-    
-    let docText = "";
-    for (let i = 0; i < uniqueDocs.length; i++) {
-      docText += "• " + uniqueDocs[i];
-      if (i < uniqueDocs.length - 1) {
-        docText += "\n";
-      }
-    }
+    const uniqueDocs = Array.from(allDocs);
+    const docText = uniqueDocs.map(doc => "• " + doc).join("\n");
 
     // Validate and set values
     if (reqText.trim() === "" || docText.trim() === "") {
