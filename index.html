@@ -353,7 +353,7 @@ const PROMOTION_CONFIG = {
     documents: [DOC_KEYS.PROPOSAL, DOC_KEYS.DUTRU_NGANSACH, DOC_KEYS.QUYET_TOAN, DOC_KEYS.CHUNG_TU]
   },
   "Giam gia": {
-    requirement: "Tổng thời gian khuyến mại không vượt quá 120 ngày/năm; không bao gồm 30 ngày trước Tết Âm lịch.",
+    requirement: "Tổng thời gian thực hiện khuyến mại đối với một loại nhãn hiệu hàng hóa, dịch vụ không được vượt quá 120 ngày trong một năm, không bao gồm 30 ngày ngay trước ngày đầu tiên của năm Âm lịch, các ngày lễ tết theo luật lao động, chương trình khuyến mãi của nhà nước (thường kéo dài 1 tháng). \nKhông yêu cầu thủ tục.",
     documents: [DOC_KEYS.THONG_BAO, DOC_KEYS.PROPOSAL, DOC_KEYS.DUTRU_NGANSACH, DOC_KEYS.QUYET_TOAN, DOC_KEYS.CHUNG_TU]
   },
   "Tang phieu mua hang": {
@@ -377,7 +377,7 @@ const PROMOTION_CONFIG = {
     documents: [DOC_KEYS.PROPOSAL, DOC_KEYS.DUTRU_NGANSACH, DOC_KEYS.QUYET_TOAN, DOC_KEYS.CHUNG_TU]
   },
   "Nghe si bieu dien": {
-    requirement: "Xin cấp phép biểu diễn; Không yêu cầu thủ tục.",
+    requirement: "Xin cấp phép biểu diễn;",
     documents: [DOC_KEYS.PROPOSAL, DOC_KEYS.DUTRU_NGANSACH, DOC_KEYS.QUYET_TOAN, DOC_KEYS.CHUNG_TU]
   },
   "Ban coupon": {
@@ -393,8 +393,9 @@ const ALCOHOL_OVERRIDES = {
       "Hang mau": "Không yêu cầu thủ tục. Hàng cho, biếu, không thu tiền",
       "Tang hang hoa/dich vu": "Không yêu cầu thủ tục. Hàng cho, biếu, không thu tiền",
       "Trao thuong thi": "Không yêu cầu thủ tục. Hàng cho, biếu, không thu tiền",
-      "Chuong trinh may rui": "Không yêu cầu thủ tục. Hàng cho, biếu, không thu tiền"
-      // Giam gia: giữ nguyên requirement gốc (chỉ bỏ thông báo ở documents)
+      "Chuong trinh may rui": "Không yêu cầu thủ tục. Hàng cho, biếu, không thu tiền",
+      "Giam gia": "Không yêu cầu thủ tục.",
+      "Nghe si bieu dien": "Xin cấp phép biểu diễn;"
     },
     documents: {
       add: {
